@@ -9,11 +9,11 @@ public class Employee implements Serializable {
 
     private String name;
 
-    private int id;
+    private Integer id;
 
-    private transient int salary;
+    private transient Integer salary;
 
-    public Employee(String name, int id, int salary) {
+    public Employee(String name, Integer id, Integer salary) {
         this.name = name;
         this.id = id;
         this.salary = salary;
@@ -31,21 +31,27 @@ public class Employee implements Serializable {
 
 
 
-    void serialize(Employee employee) throws IOException {
+    void serialize(Object o) throws IOException {
         Scanner sc = new Scanner(System.in);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("text.txt",true));
-        if(employee == null){
+        if(o == null){
             System.out.println("Nothing in class");
         }else{
-            objectOutputStream.writeObject(employee.toString());
+            objectOutputStream.writeObject(o.toString());
+            System.out.print(o.toString());
         }
     }
 
-    void deserialize(Object o) throws IOException, ClassNotFoundException {
+     void deserialize(Employee[] employees) throws IOException, ClassNotFoundException {
             File file = new File("text.txt");
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
-            o =  objectInputStream.readObject();
+
+                employees = (Employee[]) objectInputStream.readObject();
+                System.out.print(employees);
+            
             objectInputStream.close();
+
+
     }
 
 
